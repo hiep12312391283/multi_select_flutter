@@ -44,10 +44,10 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
   final bool searchable;
 
   /// Text on the confirm button.
-  final Text? confirmText;
+  final Widget? confirmText;
 
   /// Text on the cancel button.
-  final Text? cancelText;
+  final Widget? cancelText;
 
   /// Set the color of the space outside the BottomSheet.
   final Color? barrierColor;
