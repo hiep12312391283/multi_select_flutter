@@ -16,10 +16,10 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
   final BoxDecoration? decoration;
 
   /// Set text that is displayed on the button.
-  final Text? buttonText;
+  final Widget? buttonText;
 
   /// Specify the button icon.
-  final Icon? buttonIcon;
+  final Widget? buttonIcon;
 
   /// The text at the top of the dialog.
   final Widget? title;
