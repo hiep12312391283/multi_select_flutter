@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
-import '../util/multi_select_list_type.dart';
-import '../util/multi_select_item.dart';
+
 import '../chip_display/multi_select_chip_display.dart';
+import '../util/multi_select_item.dart';
+import '../util/multi_select_list_type.dart';
 import 'mult_select_dialog.dart';
 
 /// A customizable InkWell widget that opens the MultiSelectDialog
@@ -100,6 +101,8 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
   /// Whether the user can dismiss the widget by tapping outside
   final bool isDismissible;
 
+  final EdgeInsetsGeometry? padding;
+
   final AutovalidateMode autovalidateMode;
   final FormFieldValidator<List<V>>? validator;
   final FormFieldSetter<List<V>>? onSaved;
@@ -140,6 +143,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
     this.validator,
     this.initialValue = const [],
     this.autovalidateMode = AutovalidateMode.disabled,
+    this.padding,
     this.key,
   }) : super(
             key: key,
@@ -180,6 +184,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
                 separateSelectedItems: separateSelectedItems,
                 checkColor: checkColor,
                 isDismissible: isDismissible,
+                padding: padding,
               );
               return _MultiSelectDialogFieldView<V>._withState(field, state);
             });
@@ -189,8 +194,8 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
 class _MultiSelectDialogFieldView<V> extends StatefulWidget {
   final MultiSelectListType? listType;
   final BoxDecoration? decoration;
-  final Text? buttonText;
-  final Icon? buttonIcon;
+  final Widget? buttonText;
+  final Widget? buttonIcon;
   final Widget? title;
   final List<MultiSelectItem<V>> items;
   final void Function(List<V>)? onSelectionChanged;
@@ -217,6 +222,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
   final bool separateSelectedItems;
   final Color? checkColor;
   final bool isDismissible;
+  final EdgeInsetsGeometry? padding;
   FormFieldState<List<V>>? state;
 
   _MultiSelectDialogFieldView({
@@ -250,6 +256,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
     this.separateSelectedItems = false,
     this.checkColor,
     required this.isDismissible,
+    this.padding,
   });
 
   /// This constructor allows a FormFieldState to be passed in. Called by MultiSelectDialogField.
@@ -285,7 +292,8 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
         separateSelectedItems = field.separateSelectedItems,
         checkColor = field.checkColor,
         isDismissible = field.isDismissible,
-        state = state;
+        state = state,
+        padding = field.padding;
 
   @override
   __MultiSelectDialogFieldViewState createState() =>
