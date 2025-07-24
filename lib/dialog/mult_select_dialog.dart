@@ -24,10 +24,10 @@ class MultiSelectDialog<T> extends StatefulWidget with MultiSelectActions<T> {
   final bool searchable;
 
   /// Text on the confirm button.
-  final Text? confirmText;
+  final Widget? confirmText;
 
   /// Text on the cancel button.
-  final Text? cancelText;
+  final Widget? cancelText;
 
   /// An enum that determines which type of list to render.
   final MultiSelectListType? listType;
@@ -285,6 +285,7 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
         child: widget.listType == null ||
                 widget.listType == MultiSelectListType.LIST
             ? ListView.builder(
+              shrinkWrap: true,
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   return _buildListItem(_items[index]);

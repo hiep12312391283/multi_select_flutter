@@ -203,8 +203,8 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
   final List<V> initialValue;
   final void Function(List<V>)? onConfirm;
   final bool? searchable;
-  final Text? confirmText;
-  final Text? cancelText;
+  final Widget? confirmText;
+  final Widget? cancelText;
   final Color? barrierColor;
   final Color? selectedColor;
   final double? dialogHeight;
