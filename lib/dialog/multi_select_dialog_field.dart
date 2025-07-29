@@ -30,7 +30,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
   /// Fires when the an item is selected / unselected.
   final void Function(List<V>)? onSelectionChanged;
 
-  /// Overrides the default MultiSelectChipDisplay attached to this field.
+  /// Overrides the default MultiSelectChipDisplay attac∆hed to this field.
   /// If you want to remove it, use MultiSelectChipDisplay.none().
   final MultiSelectChipDisplay<V>? chipDisplay;
 
@@ -462,7 +462,19 @@ class __MultiSelectDialogFieldViewState<V>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 widget.buttonText ?? const Text("Select"),
-                widget.buttonIcon ?? const Icon(Icons.arrow_downward),
+                _selectedItems.isNotEmpty
+                    ? GestureDetector(
+                      child: Icon(Icons.clear),
+                      onTap: () {
+                        _selectedItems.clear();
+                          if (widget.state != null) {
+                            widget.state!.didChange(_selectedItems);
+                          }
+                          if (widget.onConfirm != null)
+                            widget.onConfirm!(_selectedItems);
+                      },
+                    )
+                    : widget.buttonIcon ?? const Icon(Icons.arrow_downward),
               ],
             ),
           ),
