@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../util/multi_select_actions.dart';
 import '../util/multi_select_item.dart';
 import '../util/multi_select_list_type.dart';
@@ -19,6 +20,9 @@ class MultiSelectDialog<T> extends StatefulWidget with MultiSelectActions<T> {
 
   /// Fires when confirm is tapped.
   final void Function(List<T>)? onConfirm;
+
+  /// Fires when cancel is tapped.
+  final VoidCallback? onCancel;
 
   /// Toggles search functionality. Default is false.
   final bool searchable;
@@ -88,6 +92,7 @@ class MultiSelectDialog<T> extends StatefulWidget with MultiSelectActions<T> {
     this.searchable = false,
     this.confirmText,
     this.cancelText,
+    this.onCancel,
     this.selectedColor,
     this.searchHint,
     this.height,
@@ -285,7 +290,7 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
         child: widget.listType == null ||
                 widget.listType == MultiSelectListType.LIST
             ? ListView.builder(
-              shrinkWrap: true,
+                shrinkWrap: true,
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   return _buildListItem(_items[index]);
@@ -310,7 +315,10 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                 ),
               ),
           onPressed: () {
-            widget.onCancelTap(context, widget.initialValue);
+            widget.onCancelTap(
+              context,
+              widget.initialValue,
+            );
           },
         ),
         TextButton(
@@ -324,9 +332,10 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                       : Theme.of(context).primaryColor,
                 ),
               ),
-          onPressed: () {
-            widget.onConfirmTap(context, _selectedValues, widget.onConfirm);
-          },
+          onPressed: widget.onCancel ??
+              () {
+                widget.onConfirmTap(context, _selectedValues, widget.onConfirm);
+              },
         )
       ],
     );
