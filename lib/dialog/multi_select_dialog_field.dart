@@ -431,6 +431,7 @@ class __MultiSelectDialogFieldViewState<V>
       children: <Widget>[
         InkWell(
           onTap: () {
+            FocusScope.of(context).unfocus();
             _showDialog(context);
           },
           child: Container(
@@ -464,16 +465,16 @@ class __MultiSelectDialogFieldViewState<V>
                 widget.buttonText ?? const Text("Select"),
                 _selectedItems.isNotEmpty
                     ? GestureDetector(
-                      child: Icon(Icons.clear),
-                      onTap: () {
-                        _selectedItems.clear();
+                        child: Icon(Icons.clear),
+                        onTap: () {
+                          _selectedItems.clear();
                           if (widget.state != null) {
                             widget.state!.didChange(_selectedItems);
                           }
                           if (widget.onConfirm != null)
                             widget.onConfirm!(_selectedItems);
-                      },
-                    )
+                        },
+                      )
                     : widget.buttonIcon ?? const Icon(Icons.arrow_downward),
               ],
             ),
