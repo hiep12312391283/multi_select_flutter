@@ -109,6 +109,8 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
   final GlobalKey<FormFieldState>? key;
   FormFieldState<List<V>>? state;
 
+  final VoidCallback? onTap;
+
   MultiSelectDialogField({
     required this.items,
     required this.onConfirm,
@@ -145,6 +147,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
     this.autovalidateMode = AutovalidateMode.disabled,
     this.padding,
     this.key,
+    this.onTap,
   }) : super(
             key: key,
             onSaved: onSaved,
@@ -224,6 +227,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
   final bool isDismissible;
   final EdgeInsetsGeometry? padding;
   FormFieldState<List<V>>? state;
+  final VoidCallback? onTap;
 
   _MultiSelectDialogFieldView({
     required this.items,
@@ -257,6 +261,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
     this.checkColor,
     required this.isDismissible,
     this.padding,
+    this.onTap,
   });
 
   /// This constructor allows a FormFieldState to be passed in. Called by MultiSelectDialogField.
@@ -293,7 +298,8 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
         checkColor = field.checkColor,
         isDismissible = field.isDismissible,
         state = state,
-        padding = field.padding;
+        padding = field.padding,
+        onTap = field.onTap;
 
   @override
   __MultiSelectDialogFieldViewState createState() =>
@@ -430,10 +436,10 @@ class __MultiSelectDialogFieldViewState<V>
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         InkWell(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            _showDialog(context);
-          },
+          onTap: widget.onTap ??
+              () {
+                _showDialog(context);
+              },
           child: Container(
             decoration: widget.state != null
                 ? widget.decoration ??
